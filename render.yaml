@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: stayora-hotel-booking
+    runtime: node
+    plan: free
+    # Installs both apps, builds the React client into client/dist, which the Express server then serves.
+    buildCommand: npm install --prefix server && npm install --prefix client && npm run build --prefix client
+    startCommand: npm start --prefix server
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_NAME
+        value: Stayora Admin
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
